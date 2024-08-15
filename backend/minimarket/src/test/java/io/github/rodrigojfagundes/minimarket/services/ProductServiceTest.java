@@ -31,6 +31,7 @@ import io.github.rodrigojfagundes.minimarket.repositories.CategoryRepository;
 import io.github.rodrigojfagundes.minimarket.repositories.ProductRepository;
 
 
+
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
 	
@@ -89,8 +90,7 @@ public class ProductServiceTest {
 		//Given / Arrange
 		given(categoryRepository.getOne(productDTO0.getCategoryId())).willReturn(category0);		
 		Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(product0);
-		//OU (no lugar do Mockito.When)
-		//given(repository.save(product0)).willReturn(product0);
+
 		
 		//When / Act
 		ProductDTO savedProductDTO = service.inset(productDTO0);
