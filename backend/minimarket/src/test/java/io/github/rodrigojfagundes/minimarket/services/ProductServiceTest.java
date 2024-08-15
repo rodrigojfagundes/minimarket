@@ -90,7 +90,6 @@ public class ProductServiceTest {
 		//Given / Arrange
 		given(categoryRepository.getOne(productDTO0.getCategoryId())).willReturn(category0);		
 		Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(product0);
-
 		
 		//When / Act
 		ProductDTO savedProductDTO = service.inset(productDTO0);

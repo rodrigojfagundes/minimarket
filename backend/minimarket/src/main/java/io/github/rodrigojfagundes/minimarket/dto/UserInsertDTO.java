@@ -1,6 +1,8 @@
 package io.github.rodrigojfagundes.minimarket.dto;
 
-//@UserInsertValid
+import io.github.rodrigojfagundes.minimarket.services.validations.UserInsertValid;
+
+@UserInsertValid
 public class UserInsertDTO extends UserDTO {
 
 	private static final long serialVersionUID = 1L;

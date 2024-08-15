@@ -32,6 +32,7 @@ import io.github.rodrigojfagundes.minimarket.entities.Product;
 import io.github.rodrigojfagundes.minimarket.services.ProductService;
 
 
+
 @WebMvcTest(ProductResource.class)
 public class ProductResourceTest {
 	

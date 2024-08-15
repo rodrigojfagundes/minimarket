@@ -85,13 +85,10 @@ public class ProductRepositoryTest {
 		
 		repository.save(product0);
 		repository.save(product1);
-		
-		//Page<Product> productPage = repository.find(category0, null);
-		
+				
 		List<Product> productPage = repository.findAll();
 		
 		assertNotNull(productPage);
-		//assertEquals(2, productPage.getSize());
 		
 		
 	}
