@@ -1,0 +1,73 @@
+<h1 class="mt-4">Category</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Category</li>
+</ol>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert" *ngIf="messageSuccess">
+                {{ messageSuccess }}
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="messageError">
+                {{ messageError }}
+            </div>
+        </div>
+    </div>
+<div class="row">
+    <div class="col-md-12">
+        <button class="btn btn-warning" (click)="insert()">
+            <i class="fa fa-plus"></i> New
+        </button>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col md-12">
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let category of categories">
+                    <td>{{ category.id }}</td>
+                    <td>{{ category.name }}</td>
+                    <td>
+                        <button class="btn btn-primary"
+                        routerLink="/category-form/{{category.id}}">
+                            <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger" (click)="prepareDelete(category)"
+                        data-toggle="modal" data-target="#modalDeleting">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="modalDeleting" class="modal" fade role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Confirm</h4>
+            </div>
+            <div class="modal-body" *ngIf="categorySelected">
+                Confirm deleting this category {{ categorySelected.name }} ?
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success"(click)="delete()" data-dismiss="modal">Confirm</button>
+                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</div>

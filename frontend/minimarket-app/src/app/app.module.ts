@@ -22,7 +22,9 @@ import { CategoryService } from './category.service';
     TemplateModule,
     CategoryModule
   ],
-  providers: [],
+  providers: [
+    CategoryService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
