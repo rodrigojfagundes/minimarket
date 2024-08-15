@@ -3,10 +3,10 @@ import jQuery from 'jquery';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.ts'],
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.css'],
 })
-export class AppComponent implements AfterViewInit {
+export class LayoutComponent implements AfterViewInit {
   title = 'minimarket-app';
 
   ngAfterViewInit(): void {

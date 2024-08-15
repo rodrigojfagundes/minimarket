@@ -34,6 +34,11 @@ export class LoginComponent {
     );
   }
 
+  prepareRegister(event) {
+    event.preventDefault();
+    this.registering = true;
+  }
+
   cancelRegister() {
     this.registering = false;
   }

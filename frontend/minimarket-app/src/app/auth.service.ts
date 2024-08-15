@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { JwtConfig, JwtHelperService } from '@auth0/angular-jwt';
-import { User } from './login/user';
+import { User } from './login/users';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +39,16 @@ export class AuthService {
     }
     return false;
   }
+
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    if (token) {
+      const expired = this.jwtHelper.isTokenExpired(token);
+      return !expired;
+    }
+    return false;
+  }
+
   insert(user: User): Observable<any> {
     return this.http.post<any>(this.apiURL, user);
   }

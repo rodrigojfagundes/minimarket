@@ -1,75 +1,85 @@
 <h1 class="mt-4">Product</h1>
 <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item active">Product</li>
+  <li class="breadcrumb-item active">Product</li>
 </ol>
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-success" role="alert" *ngIf="messageSuccess">
-                {{ messageSuccess }}
-            </div>
-            <div class="alert alert-danger" role="alert" *ngIf="messageError">
-                {{ messageError }}
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-success" role="alert" *ngIf="messageSuccess">
+        {{ messageSuccess }}
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="messageError">
+        {{ messageError }}
+      </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <button class="btn btn-warning" (click)="insert()">
-                <i class="fa fa=plus"></i> New
-            </button>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-warning" (click)="insert()">
+        <i class="fa fa=plus"></i> New
+      </button>
     </div>
-    <br />
-    <div class="row">
-        <div class="col md-12">
-            <table class="table table-condensed table-hover">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Quantity</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let product of products">
-                        <td>{{ product.id }}</td>
-                        <td>{{ product.name }}</td>
-                        <td>{{ product.description }}</td>
-                        <td>{{ product.quantity }}</td>
-                        <td>
-                            <button class="btn btn-primary"
-                            routerLink="/product-form/{{product.id}}">
-                                <i class="fa fa-edit"></i>
-                        </button>
-                        <button class="btn btn-danger" (click)="prepareDelete(product)"
-                            data-toggle="modal" data-target="#modalDeleting">
-                                <i class="fa fa-trash"></i>
-                        </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col md-12">
+      <table class="table table-condensed table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>
+              <button
+                class="btn btn-primary"
+                routerLink="/product/form/{{ product.id }}"
+              >
+                <i class="fa fa-edit"></i>
+              </button>
+              <button
+                class="btn btn-danger"
+                (click)="prepareDelete(product)"
+                data-toggle="modal"
+                data-target="#modalDeleting"
+              >
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div id="modalDeleting" class="modal" fade role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Confirm</h4>
-                </div>
-                <div class="modal-body" *ngIf="productSelected">
-                    Confirm deleting this product {{ productSelected.name }} ?
-                </div>
-                <div class="modal-footer">
-                <button class="btn btn-success"
-                    (click)="delete()" data-dismiss="modal">Confirm</button>
-                <button class="btn btn-default"
-                 data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
+  </div>
+  <div id="modalDeleting" class="modal" fade role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Confirm</h4>
         </div>
+        <div class="modal-body" *ngIf="productSelected">
+          Confirm deleting this product {{ productSelected.name }} ?
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-success"
+            (click)="delete()"
+            data-dismiss="modal"
+          >
+            Confirm
+          </button>
+          <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
