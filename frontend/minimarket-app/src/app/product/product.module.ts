@@ -6,7 +6,7 @@ import { ProductFormComponent } from "./product-form/product-form.component";
 
 
 @NgModule({
-    declarations:[],
+    declarations:[ProductFormComponent],
     imports:[
         CommonModule,
         ProductRoutingModule

@@ -11,9 +11,15 @@ export class ProductFormComponent implements OnInit {
 
     product: Product;
     
-    constructor(){}
+    constructor(){
+        this.product = new Product();
+        this.product.name = 'Arroz';
+    }
 
     ngOnInit(): void {
-        
+    }
+
+    clicar(){
+        console.log('clicked');
     }
 }
