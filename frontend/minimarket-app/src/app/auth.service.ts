@@ -11,7 +11,7 @@ import { User } from './login/user';
 export class AuthService {
   apiURL: string = environment.apiUrlBase + '/users';
 
-  tokenURL: string = environment.apiUrlBase + environment.getTokenURL;
+  tokenURL: string = environment.apiUrlBase + environment.getTokenUrl;
   clientID: string = environment.clientId;
   clientSecret: string = environment.clientSecret;
   jwtHelper: JwtHelperService = new JwtHelperService();
@@ -25,5 +25,34 @@ export class AuthService {
       return token;
     }
     return null;
+  }
+
+  closeSession() {
+    localStorage.removeItem('access_token');
+  }
+
+  getUserAuthenticated(): boolean {
+    const token = this.getToken();
+    if (token) {
+      const expired = this.jwtHelper.isTokenExpired(token);
+      return !expired;
+    }
+    return false;
+  }
+  insert(user: User): Observable<any> {
+    return this.http.post<any>(this.apiURL, user);
+  }
+
+  tryLogin(username: string, password: string): Observable<any> {
+    const params = new HttpParams()
+      .set('username', username)
+      .set('password', password)
+      .set('grant_type', 'password');
+
+    const headers = {
+      Authorization: 'Basic ' + btoa(`${this.clientID}:${this.clientSecret}`),
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    return this.http.post(this.tokenURL, params.toString(), { headers });
   }
 }
