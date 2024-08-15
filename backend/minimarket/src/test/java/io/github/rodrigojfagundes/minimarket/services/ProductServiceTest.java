@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import io.github.rodrigojfagundes.minimarket.dto.CategoryDTO;
 import io.github.rodrigojfagundes.minimarket.dto.ProductDTO;
@@ -28,6 +29,7 @@ import io.github.rodrigojfagundes.minimarket.entities.Category;
 import io.github.rodrigojfagundes.minimarket.entities.Product;
 import io.github.rodrigojfagundes.minimarket.repositories.CategoryRepository;
 import io.github.rodrigojfagundes.minimarket.repositories.ProductRepository;
+
 
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
@@ -46,6 +48,8 @@ public class ProductServiceTest {
 	private ProductDTO productDTO0;
 	
 	private Category category0;
+	
+	private Category category2;
 	
 	private CategoryDTO categoryDTO0;
 	
@@ -70,7 +74,7 @@ public class ProductServiceTest {
 				"name",
 				"description",
 				1L, 
-				null
+				1L
 				);
 		
 		page = new PageImpl<>(List.of(product0));
@@ -111,7 +115,45 @@ public class ProductServiceTest {
 		
 	}
 	
+	@Test
+	public void findByIdShouldReturnProductDTOWhenIdExists() {
+		
+		Mockito.when(repository.findById(1L)).thenReturn(Optional.of(product0));
+		
+		
+		ProductDTO result = service.findById(1L);
+		
+		
+		Assertions.assertNotNull(result);
+		
+	}
 	
+	
+	@Test
+	void testGivenProductObject_WhenUpdateProduct_thenReturnUpdatedProductObject() {
+		
+		given(repository.getOne(anyLong())).willReturn(product0);
+		given(categoryRepository.getOne(anyLong())).willReturn(category0);
+		
+		product0.setName("nameUpdated");
+		productDTO0.setName("nameUpdated");
+		
+		given(repository.save(product0)).willReturn(product0);
+		
+		ProductDTO updatedProduct = service.update(1L, productDTO0);
+		
+		assertNotNull(updatedProduct);
+	
+		
+	}
+	
+	@Test
+	public void deleteSHouldDoNothingWhenIdExists() {
+		Assertions.assertDoesNotThrow(() -> {
+			service.delete(1L);
+		});
+		Mockito.verify(repository, times(1)).deleteById(1L);
+	}
 	
 	
 }

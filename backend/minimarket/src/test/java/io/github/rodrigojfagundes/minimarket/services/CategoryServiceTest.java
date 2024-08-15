@@ -22,6 +22,8 @@ import io.github.rodrigojfagundes.minimarket.repositories.CategoryRepository;
 @ExtendWith(MockitoExtension.class)
 public class CategoryServiceTest {
 	
+	//
+	
 	@Mock
 	private CategoryRepository repository;
 	
