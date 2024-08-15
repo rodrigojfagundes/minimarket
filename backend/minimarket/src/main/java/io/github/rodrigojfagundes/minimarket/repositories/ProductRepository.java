@@ -13,11 +13,6 @@ import io.github.rodrigojfagundes.minimarket.entities.Product;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 	
 	
-	//OBS TA ESCRITO FINDALL MAS ERA FIND
-	//@Query("SELECT obj FROM Product obj WHERE :category IS NULL OR obj.category = :category")
-	//Page<Product> findAll(Category category, Pageable pageable);
-	
-	
-	
+
 	
 }

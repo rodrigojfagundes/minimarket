@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Table(name = "tb_product")
@@ -22,6 +23,7 @@ public class Product implements Serializable {
 	private Long id;
 	private String name;
 	private String description;
+	@Positive
 	private Long quantity;
 
 	@ManyToOne

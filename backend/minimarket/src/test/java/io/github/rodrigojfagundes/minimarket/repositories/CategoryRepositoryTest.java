@@ -16,8 +16,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import io.github.rodrigojfagundes.minimarket.dto.CategoryDTO;
 import io.github.rodrigojfagundes.minimarket.entities.Category;
 
-//
-
 @DataJpaTest
 public class CategoryRepositoryTest {
 	

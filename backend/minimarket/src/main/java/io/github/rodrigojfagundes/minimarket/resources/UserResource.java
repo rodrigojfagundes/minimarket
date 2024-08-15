@@ -21,6 +21,9 @@ import io.github.rodrigojfagundes.minimarket.dto.UserDTO;
 import io.github.rodrigojfagundes.minimarket.dto.UserInsertDTO;
 import io.github.rodrigojfagundes.minimarket.dto.UserUpdateDTO;
 import io.github.rodrigojfagundes.minimarket.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -29,19 +32,42 @@ public class UserResource {
 	@Autowired
 	private UserService service;
 	
+	
+    @Operation(summary = "Busca dados de todos usuários", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "401", description = "Acesso não autorizado"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
+    })
 	@GetMapping
 	private ResponseEntity<List<UserDTO>> findAll() {
 		List<UserDTO> usersDTOs = service.findAll();
 		return ResponseEntity.ok().body(usersDTOs);
 	}
 	
+    
+    @Operation(summary = "Busca dados de User por Id", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Parametros inválidos"),
+            @ApiResponse(responseCode = "401", description = "Aceso não autorizado"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
+    })
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> findById(@PathVariable Long id){
 		UserDTO userDTO = service.findById(id);
 		return ResponseEntity.ok(userDTO);
 	}
-	
-	
+	    
+	   @Operation(summary = "Realiza o cadastro de User", method = "POST")
+	    @ApiResponses(value = {
+	            @ApiResponse(responseCode = "201", description = "Cadastro de User realizado com sucesso"),  
+	            @ApiResponse(responseCode = "400", description = "Parametros inválidos"),
+	            @ApiResponse(responseCode = "422", description = "Solicitação foi bem formada, mas não pôde ser atendida devido a erros semânticos"),
+	            @ApiResponse(responseCode = "500", description = "Erro ao realizar o cadastro de User"),
+	    })
 	@PostMapping 
 	public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO userInsertDTO){
 		UserDTO userDTO = service.insert(userInsertDTO);
@@ -53,6 +79,14 @@ public class UserResource {
 	}
 	
 	
+	    @Operation(summary = "Editar User", method = "PUT")
+	    @ApiResponses(value = {
+	            @ApiResponse(responseCode = "200", description = "Edição de User realizada com sucesso"),
+	            @ApiResponse(responseCode = "400", description = "Parametros inválidos"),
+	            @ApiResponse(responseCode = "401", description = "Acesso não autorizado"),
+	            @ApiResponse(responseCode = "404", description = "User não encontrado"),
+	            @ApiResponse(responseCode = "500", description = "Erro ao editar User"),
+	    })
 	@PutMapping
 	public ResponseEntity<UserDTO> update(@PathVariable Long id, 
 			@Valid @RequestBody UserUpdateDTO userUpdateDTO) {
@@ -61,6 +95,15 @@ public class UserResource {
 		return ResponseEntity.ok().body(userDTO);
 	}
 	
+	
+	    @Operation(summary = "Delete User", method = "DELETE")
+	    @ApiResponses(value = {
+	            @ApiResponse(responseCode = "204", description = "User deletado com sucesso"),
+	            @ApiResponse(responseCode = "404", description = "User não encontrada"),
+	            @ApiResponse(responseCode = "400", description = "Parametros inválidos"),
+	            @ApiResponse(responseCode = "401", description = "Acesso não autorizado"),
+	            @ApiResponse(responseCode = "500", description = "Erro ao deletar User"),
+	    })
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> delete(@PathVariable Long id){
 		service.delete(id);

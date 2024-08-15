@@ -18,7 +18,6 @@ import org.springframework.data.domain.PageRequest;
 import io.github.rodrigojfagundes.minimarket.entities.Category;
 import io.github.rodrigojfagundes.minimarket.entities.Product;
 
-//
 
 @DataJpaTest
 public class ProductRepositoryTest {
@@ -85,7 +84,8 @@ public class ProductRepositoryTest {
 		
 		repository.save(product0);
 		repository.save(product1);
-				
+		
+		
 		List<Product> productPage = repository.findAll();
 		
 		assertNotNull(productPage);

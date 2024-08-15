@@ -30,7 +30,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	private JwtTokenStore tokenStore;
 	
 	
-	private static final String[] PUBLIC = { "/oauth/token", "/h2-console/**" };
+//	private static final String[] PUBLIC = { "/oauth/token", "/h2-console/**", "/swagger-ui/**" };
+	private static final String[] PUBLIC = { "/oauth/token", "/h2-console/**", };
 	private static final String[] CREATE_ACCOUNT = { "/users/**" };
 	private static final String[] USERS = { "/users/**" };
 	private static final String[] POST_PRODUCT = { "/products" };
