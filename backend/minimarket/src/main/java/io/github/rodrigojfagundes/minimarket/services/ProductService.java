@@ -1,5 +1,6 @@
 package io.github.rodrigojfagundes.minimarket.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,9 +32,9 @@ public class ProductService {
 	private CategoryRepository categoryRepository;
 	
 	@Transactional(readOnly = true)
-	public Page<ProductDTO> findAllPaged (Long categoryId, PageRequest pageRequest) {
-		Category category = (categoryId == 0) ? null : categoryRepository.getOne(categoryId);
-		Page<Product> page = repository.find(category, pageRequest);
+	public Page<ProductDTO> findAllPaged (Pageable pageable) {
+		//Category category = (categoryId == 0) ? null : categoryRepository.getOne(categoryId);
+		Page<Product> page = repository.findAll(pageable);
 		return page.map(product -> new ProductDTO(product));
 	}
 	

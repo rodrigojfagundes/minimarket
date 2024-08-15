@@ -1,5 +1,6 @@
 package io.github.rodrigojfagundes.minimarket.services;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,10 +12,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.*;
+
+import java.util.List;
 
 import io.github.rodrigojfagundes.minimarket.dto.CategoryDTO;
 import io.github.rodrigojfagundes.minimarket.dto.ProductDTO;
@@ -43,6 +49,7 @@ public class ProductServiceTest {
 	
 	private CategoryDTO categoryDTO0;
 	
+	private PageImpl<Product> page;
 	
 	@BeforeEach
 	public void setup() {
@@ -63,8 +70,11 @@ public class ProductServiceTest {
 				"name",
 				"description",
 				1L, 
-				anyLong()
-				);		
+				null
+				);
+		
+		page = new PageImpl<>(List.of(product0));
+		
 	}
 	
 	@DisplayName("JUnit test for Given Product Object When Save product then return Product Object")
@@ -85,5 +95,23 @@ public class ProductServiceTest {
 		assertEquals("name1", savedProductDTO.getName());
 		
 	}
+	
+
+	@Test
+	public void testGivenProductPage_WhenFindAllProucts_thenReturnProductsPage(){
+		
+		Mockito.when(repository.findAll((Pageable)ArgumentMatchers.any())).thenReturn(page);
+		
+		Pageable pageable = PageRequest.of(0, 12);
+		
+		Page<ProductDTO> result = service.findAllPaged(pageable);
+		
+		Assertions.assertNotNull(result);
+		Mockito.verify(repository, times(1)).findAll(pageable);
+		
+	}
+	
+	
+	
 	
 }
