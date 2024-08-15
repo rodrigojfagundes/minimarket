@@ -85,7 +85,8 @@ public class ProductRepositoryTest {
 		
 		repository.save(product0);
 		repository.save(product1);
-				
+		
+		
 		List<Product> productPage = repository.findAll();
 		
 		assertNotNull(productPage);
