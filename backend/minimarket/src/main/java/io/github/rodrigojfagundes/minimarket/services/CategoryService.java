@@ -61,6 +61,8 @@ public class CategoryService {
 			category.setName(dto.getName());
 			category.setDescription(dto.getDescription());
 			
+			category = repository.save(category);
+			
 			return new CategoryDTO(category);
 		}
 		catch(EntityNotFoundException e) {
