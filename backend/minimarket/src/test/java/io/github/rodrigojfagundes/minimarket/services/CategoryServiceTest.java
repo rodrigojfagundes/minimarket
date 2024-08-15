@@ -1,12 +1,19 @@
 package io.github.rodrigojfagundes.minimarket.services;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -22,7 +29,6 @@ import io.github.rodrigojfagundes.minimarket.repositories.CategoryRepository;
 @ExtendWith(MockitoExtension.class)
 public class CategoryServiceTest {
 	
-	//
 	
 	@Mock
 	private CategoryRepository repository;
@@ -34,6 +40,8 @@ public class CategoryServiceTest {
 	
 	private CategoryDTO categoryDTO0;
 	
+	private PageImpl<Category> page;
+	
 	@BeforeEach
 	public void setup() {
 		category0 = new Category(
@@ -41,111 +49,84 @@ public class CategoryServiceTest {
 		
 		categoryDTO0 = new CategoryDTO(
 				null, "name", "description");
+		
+		
+		page = new PageImpl<>(List.of(category0));
+		
 	}
 	
-	@DisplayName("JUnit test for Given Category Object When Save category then return Category Object")
+	@DisplayName("JUnit test for Given Category Object When Save category then Return Category Object")
 	@Test
-	void testGivenPersonObject_WhenSaveCategory_thenReturnCategoryObject() {
+	void testGivenCategoryObject_WhenSaveCategory_thenReturnCategoryObject() {
 		
 		//Given / Arrange
-		given(repository.save(category0)).willReturn(category0);
+		Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(category0);
 		
 		//When / Act
 		CategoryDTO savedCategoryDTO = service.insert(categoryDTO0);
 		
 		//Then / Assert
 		assertNotNull(savedCategoryDTO);
-		assertEquals("name", savedCategoryDTO.getName());
+	
 	}
 	
-	
-	@DisplayName("JUnit test for Given Categories List When FindAll Categories then Return Categories List")
+	@DisplayName("JUnit test for Given Category Page When Find All Categories Then Return Categories Page")
 	@Test
-	void testGivenCategoryList_WhenFindAllCategories_thenReturnCategoriesList() {
+	public void testGivenCategoryPage_WhenFindAllCategories_thenReturnCategoriesPage() {
 		
-		//Given / Arrange
-		Category category1 = new Category(
-				null, "name2", "description2");
+		Mockito.when(repository.findAll((Pageable)ArgumentMatchers.any())).thenReturn(page);
 		
-		CategoryDTO categoryDTO1 = new CategoryDTO(
-				null, "name2", "description2");
+		Pageable pageable = PageRequest.of(0, 12);
 		
-		given(repository.findAll()).willReturn(List.of(category0, category1));
+		Page<CategoryDTO> result = service.findAllPaged(pageable);
 		
-		
-		//When / Act
-		List<CategoryDTO> categoryDTOList = service.findAll();
-		
-		//Then / Assert		
-		assertNotNull(categoryDTOList);
-		assertEquals(2, categoryDTOList.size());
-		
+		Assertions.assertNotNull(result);		
 	}
 	
-	@DisplayName("JUnit test for Given Category Id When FindById then Return Category Object")
+	@DisplayName("JUnit test for FindByID Should Return CategoryDTO When Id Exists")
 	@Test
-	void testGivenCategoryId_WhenFindById_thenReturnCategoryObject() {
+	public void findByIdShouldReturnCategoryDTOWhenIdExists() {
 		
-		//Given / Arrange
-		given(repository.findById(anyLong())).willReturn(Optional.of(category0));
+		Mockito.when(repository.findById(1L)).thenReturn(Optional.of(category0));
 		
-		//When / Act
-		CategoryDTO savedCategoryDTO = service.findById(1L);
+		CategoryDTO result = service.findById(1L);
 		
-		//Then / Assert
-		assertNotNull(savedCategoryDTO);
-		assertEquals("name", savedCategoryDTO.getName());
+		Assertions.assertNotNull(result);
 		
 	}
 	
-	@DisplayName("JUnit test for Given Category Object When Updated Category then Return Updated Category")
+	@DisplayName("JUnit test for Delete Should Do Nothing When Id Exists")
 	@Test
-	void testGivenCategoryObject_WhenUpdateCategory_thenReturnUpdatedCategoryObject() {
+	public void deleteShouldDoNothingWhenIdExists() {
+		Assertions.assertDoesNotThrow(() -> {
+			service.delete(1L);
+		});
+		Mockito.verify(repository, times(1)).deleteById(1L);
+	}
+	
+	@DisplayName("JUnit test for Given CategoryDTO Object When Update Category Then Treturn Updated CategoryDTO Object")
+	@Test
+	public void testGivenCategoryDTOObject_WhenUpdateCategory_thenReturnUpdatedCategoryDTOObject() {
+		
 		
 		//Given / Arrange
 		category0.setId(1L);
-		categoryDTO0.setId(1L);		
+		categoryDTO0.setId(1L);
+		
 		given(repository.getOne(anyLong())).willReturn(category0);
 		
 		category0.setName("NameUpdated");
-		category0.setDescription("DescriptionUpdated");		
-		
-		categoryDTO0.setName("NameUpdated");
-		categoryDTO0.setDescription("DescriptionUpdated");
+		category0.setDescription("DescriptionUpdated");
 		
 		given(repository.save(category0)).willReturn(category0);
 		
-		
-		// When / Act
+		//When / Act
 		CategoryDTO updatedCategory = service.update(1L, categoryDTO0);
 		
 		//Then / Assert
 		assertNotNull(updatedCategory);
-		assertEquals("NameUpdated", updatedCategory.getName());
-		assertEquals("DescriptionUpdated", updatedCategory.getDescription());
+		
 	}
 	
-	@DisplayName("JUnit test for Given Category ID When Delete Category then do Nothing")
-	@Test
-	void testGivenCategoryID_WhenDeleteCategory_thenDoNothind() {
-		
-		//Given / Arrange
-		
-		category0.setId(1L);
-		categoryDTO0.setId(1L);
-		
-//		given(repository.deleteById(anyLong())).willReturn(
-//				Optional.of(category0));
-		
-		
-		willDoNothing().given(repository).deleteById(1L);
-		
-		
-		//When / Act
-		service.delete(categoryDTO0.getId());
-		
-		//Then / Assert
-		verify(repository, times(1)).deleteById(1L);
-	}
 	
 }

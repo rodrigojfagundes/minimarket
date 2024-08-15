@@ -87,9 +87,10 @@ public class ProductServiceTest {
 		
 		
 		//Given / Arrange
-		given(categoryRepository.getOne(productDTO0.getCategoryId())).willReturn(category0);
-		given(repository.save(product0)).willReturn(product0);
-		//Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(product0);
+		given(categoryRepository.getOne(productDTO0.getCategoryId())).willReturn(category0);		
+		Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(product0);
+		//OU (no lugar do Mockito.When)
+		//given(repository.save(product0)).willReturn(product0);
 		
 		//When / Act
 		ProductDTO savedProductDTO = service.inset(productDTO0);
@@ -100,7 +101,7 @@ public class ProductServiceTest {
 		
 	}
 	
-
+	@DisplayName("JUnit test for Given Product Page WHen FindAll Products then Return Products Page")
 	@Test
 	public void testGivenProductPage_WhenFindAllProucts_thenReturnProductsPage(){
 		
@@ -115,22 +116,21 @@ public class ProductServiceTest {
 		
 	}
 	
-	@Test
+	@DisplayName("JUnit Test FindById Should Return ProductDTO When Id Exists")
+	@Test	
 	public void findByIdShouldReturnProductDTOWhenIdExists() {
 		
 		Mockito.when(repository.findById(1L)).thenReturn(Optional.of(product0));
-		
-		
+				
 		ProductDTO result = service.findById(1L);
-		
-		
+				
 		Assertions.assertNotNull(result);
 		
 	}
 	
-	
+	@DisplayName("JUnit test Given Product Object When Update Product Then Return Updated ProductDTO Object")	
 	@Test
-	void testGivenProductObject_WhenUpdateProduct_thenReturnUpdatedProductObject() {
+	void testGivenProductObject_WhenUpdateProduct_thenReturnUpdatedProductDtoObject() {
 		
 		given(repository.getOne(anyLong())).willReturn(product0);
 		given(categoryRepository.getOne(anyLong())).willReturn(category0);
@@ -147,8 +147,9 @@ public class ProductServiceTest {
 		
 	}
 	
+	@DisplayName("JUnit test delete Should Do Nothind When Id Exists")
 	@Test
-	public void deleteSHouldDoNothingWhenIdExists() {
+	public void deleteShouldDoNothingWhenIdExists() {
 		Assertions.assertDoesNotThrow(() -> {
 			service.delete(1L);
 		});

@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -29,7 +30,6 @@ import io.github.rodrigojfagundes.minimarket.dto.ProductDTO;
 import io.github.rodrigojfagundes.minimarket.entities.Category;
 import io.github.rodrigojfagundes.minimarket.entities.Product;
 import io.github.rodrigojfagundes.minimarket.services.ProductService;
-
 
 @WebMvcTest(ProductResource.class)
 public class ProductResourceTest {
@@ -81,8 +81,9 @@ public class ProductResourceTest {
 		
 	}
 	
+	@DisplayName("JUnit test findAll ShouldReturn ProductDTO Page")
 	@Test
-	public void findAllShouldReturnPage() throws Exception {
+	public void findAllShouldReturnProductDTOPage() throws Exception {
 		
 		when(service.findAllPaged(any())).thenReturn(page);
 		
@@ -93,6 +94,7 @@ public class ProductResourceTest {
 		
 	}
 	
+	@DisplayName("JUnit test Insert Should Return ProductDTO Created")
 	@Test
 	public void insertShouldReturnProductDTOCreated() throws Exception {
 		
@@ -110,6 +112,7 @@ public class ProductResourceTest {
 		
 	}
 	
+	@DisplayName("JUnit Test Delete Should Return NoContent When Id Exists")
 	@Test
 	public void deleteShouldReturnNoContentWhenIdExists() throws Exception {
 		
@@ -122,8 +125,9 @@ public class ProductResourceTest {
 		
 	}
 	
+	@DisplayName("JUnit test FindById Should Return ProductDTO When Id Exists")
 	@Test
-	public void findByIdShouldReturnProductWhenIdExists() throws Exception {
+	public void findByIdShouldReturnProductDTOWhenIdExists() throws Exception {
 		
 		when(service.findById(1L)).thenReturn(productDTO0);
 		
@@ -134,7 +138,7 @@ public class ProductResourceTest {
 		
 	}
 	
-	
+	@DisplayName("JUnit test Update SHould Return ProductDTO When Id Exists")
 	@Test
 	public void updateShouldReturnProductDTOWhenIdExists() throws Exception {
 		

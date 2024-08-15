@@ -14,10 +14,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -27,6 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.rodrigojfagundes.minimarket.dto.CategoryDTO;
 import io.github.rodrigojfagundes.minimarket.services.CategoryService;
 import io.github.rodrigojfagundes.minimarket.tests.Factory;
+
 
 @WebMvcTest(CategoryResource.class)
 public class CategoryResourceTest {	
@@ -44,7 +47,7 @@ public class CategoryResourceTest {
 	private Long nonExistingId;
 	private Long dependentId;
 	private CategoryDTO categoryDTO;
-	//private PageImpl<CategoryDTO> page;
+	private PageImpl<CategoryDTO> page;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -56,16 +59,18 @@ public class CategoryResourceTest {
 		categoryDTO = Factory.createCategoryDTO();
 		List<CategoryDTO> categoriesDTO = List.of(categoryDTO);
 		
-		when(service.findAll()).thenReturn(categoriesDTO);
-		when(service.findById(existingId)).thenReturn(categoryDTO);
-		when(service.insert(any())).thenReturn(categoryDTO);
-		when(service.update(eq(existingId), any())).thenReturn(categoryDTO);
-		doNothing().when(service).delete(existingId);
+
+		
+		page = new PageImpl<>(List.of(categoryDTO));
 		
 	}
 	
+	@DisplayName("JUnit test Insert Should Return CategoryDTO Created")
 	@Test
 	public void insertShouldReturnCategoryDTOCreated() throws Exception {
+		
+		
+		when(service.insert(any())).thenReturn(categoryDTO);		
 		
 		String jsonBody = objectMapper.writeValueAsString(categoryDTO);
 		
@@ -78,16 +83,22 @@ public class CategoryResourceTest {
 		
 	}
 	
+	@DisplayName("JUnit test Delete Should Return NoContent When Id Exists")
 	@Test
 	public void deleteShouldReturnNoContentWhenIdExists() throws Exception {
+		
+		doNothing().when(service).delete(existingId);		
 		
 		ResultActions result =  mockMvc.perform(delete("/categories/{id}", existingId)
 				.accept(MediaType.APPLICATION_JSON));
 	result.andExpect(status().isNoContent());
 	}
 	
+	@DisplayName("JUnit test Update Should Return CategoryDTO When Id Exists")
 	@Test
 	public void updateShouldReturnCategoryDTOWhenIdExists() throws Exception {
+
+		when(service.update(eq(existingId), any())).thenReturn(categoryDTO);
 		
 		String jsonBody = objectMapper.writeValueAsString(categoryDTO);
 		
@@ -101,9 +112,12 @@ public class CategoryResourceTest {
 		
 	}
 	
+	@DisplayName("JUnit test findById Should Return CategoryDTO When Id Exists")
 	@Test
-	public void findByIdShouldReturnCategoryWhenIdExist() throws Exception {
+	public void findByIdShouldReturnCategoryDTOWhenIdExist() throws Exception {
 		
+		when(service.findById(existingId)).thenReturn(categoryDTO);
+				
 		ResultActions result = mockMvc.perform(get("/categories/{id}", existingId)
 				.accept(MediaType.APPLICATION_JSON));
 		
@@ -111,8 +125,11 @@ public class CategoryResourceTest {
 		
 	}
 	
+	@DisplayName("findAll Should Return CategoryDTO Page")
 	@Test
-	public void findAllShouldReturnList() throws Exception {
+	public void findAllShouldReturnCategoryDTOPage() throws Exception {
+				
+		when(service.findAllPaged(any())).thenReturn(page);
 		
 		ResultActions result = mockMvc.perform(get("/categories")
 				.accept(MediaType.APPLICATION_JSON));
