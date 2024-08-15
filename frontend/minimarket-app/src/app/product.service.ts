@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Product } from "./product/product";
 import { Observable } from "rxjs";
+import { ResponsePageableProduct } from "./product/response-pageable-product.model";
 
 @Injectable({
     providedIn: 'root'
@@ -19,8 +20,8 @@ export class ProductService {
         return this.http.put<Product>(`http://localhost:8080/products/${product.id}`, product);
     }
 
-    findAll() : Observable<Product[]> {
-        return this.http.get<Product[]>('http://localhost:8080/products');
+    findAll() : Observable<ResponsePageableProduct> {
+        return this.http.get<ResponsePageableProduct>('http://localhost:8080/products');
     }
 
     findById(id: number) : Observable<Product> {

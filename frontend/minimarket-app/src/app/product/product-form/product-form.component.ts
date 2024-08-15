@@ -19,6 +19,6 @@ export class ProductFormComponent implements OnInit {
     }
 
     clicar(){
-        console.log('clicked');
+        console.log(this.product);
     }
 }
