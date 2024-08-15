@@ -20,7 +20,7 @@ export class CategoryFormComponent implements OnInit {
     }
 
     clicar(){
-        console.log('clicked');
+        console.log(this.category);
     }
 
 
