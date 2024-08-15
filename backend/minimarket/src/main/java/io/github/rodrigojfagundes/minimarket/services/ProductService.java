@@ -82,12 +82,11 @@ public class ProductService {
 	
 	
 	
-	private void copyDtoToEntity(ProductDTO dto, Product entity) {
-		Category category = categoryRepository.getOne(dto.getCategoryId());
-		
+	private void copyDtoToEntity(ProductDTO dto, Product entity) {				
 		entity.setName(dto.getName());
 		entity.setDescription(dto.getDescription());
 		entity.setQuantity(dto.getQuantity());
+		Category category = categoryRepository.getOne(dto.getCategoryId());
 		entity.setCategory(category);
 		
 		
