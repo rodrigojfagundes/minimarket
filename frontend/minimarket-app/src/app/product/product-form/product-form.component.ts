@@ -13,7 +13,6 @@ export class ProductFormComponent implements OnInit {
     
     constructor(){
         this.product = new Product();
-        this.product.name = 'Arroz';
     }
 
     ngOnInit(): void {

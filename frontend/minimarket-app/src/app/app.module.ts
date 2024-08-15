@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CategoryModule } from './category/category.module';
 import { CategoryService } from './category.service';
 import { ProductModule } from './product/product.module';
+import { ProductService } from './product.service';
 
 @NgModule({
   declarations: [
