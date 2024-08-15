@@ -10,9 +10,20 @@ export class CategoryFormComponent implements OnInit {
 
     category: Category;
 
-    constructor() {}
+    constructor() {
+        this.category = new Category();
+        this.category.name = 'Food';
+    }
 
+    
     ngOnInit(): void {
         
     }
+
+    clicar(){
+        console.log('clicked');
+    }
+
+
+
 }
