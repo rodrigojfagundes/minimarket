@@ -32,7 +32,7 @@ export class ProductService {
     }
 
     findById(id: number) : Observable<Product> {
-        return this.http.get<any> (`http://localhost:8080/products/$id`);
+        return this.http.get<any> (`http://localhost:8080/products/${id}`);
     }
 
     delete(product: Product) : Observable<any>{
