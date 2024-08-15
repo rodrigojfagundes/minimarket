@@ -28,6 +28,7 @@
           <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Description</th>
             <th></th>
           </tr>
         </thead>
@@ -35,6 +36,7 @@
           <tr *ngFor="let category of categories">
             <td>{{ category.id }}</td>
             <td>{{ category.name }}</td>
+            <td>{{ category.description }}</td>
             <td>
               <button
                 class="btn btn-primary"
