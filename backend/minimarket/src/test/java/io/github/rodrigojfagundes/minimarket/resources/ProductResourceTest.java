@@ -1,9 +1,13 @@
 package io.github.rodrigojfagundes.minimarket.resources;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
@@ -25,7 +29,6 @@ import io.github.rodrigojfagundes.minimarket.dto.ProductDTO;
 import io.github.rodrigojfagundes.minimarket.entities.Category;
 import io.github.rodrigojfagundes.minimarket.entities.Product;
 import io.github.rodrigojfagundes.minimarket.services.ProductService;
-
 
 @WebMvcTest(ProductResource.class)
 public class ProductResourceTest {
@@ -106,6 +109,45 @@ public class ProductResourceTest {
 		
 	}
 	
+	@Test
+	public void deleteShouldReturnNoContentWhenIdExists() throws Exception {
+		
+		doNothing().when(service).delete(1L);
+		
+		ResultActions result = mockMvc.perform(delete("/products/{id}", 1L)
+				.accept(MediaType.APPLICATION_JSON));
+		
+		result.andExpect(status().isNoContent());
+		
+	}
+	
+	@Test
+	public void findByIdShouldReturnProductWhenIdExists() throws Exception {
+		
+		when(service.findById(1L)).thenReturn(productDTO0);
+		
+		ResultActions result = mockMvc.perform(get("/products/{id}", 1L)
+				.accept(MediaType.APPLICATION_JSON));
+		
+		result.andExpect(status().isOk());
+		
+	}
+	
+	
+	@Test
+	public void updateShouldReturnProductDTOWhenIdExists() throws Exception {
+		
+		when(service.update(eq(1L), any())).thenReturn(productDTO0);
+		
+		String jsonBody = objectMapper.writeValueAsString(productDTO0);
+		
+		ResultActions result = mockMvc.perform(put("/products/{id}", 1L)
+				.content(jsonBody)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON));
+		
+		result.andExpect(status().isOk());
+	}
 	
 	
 }
