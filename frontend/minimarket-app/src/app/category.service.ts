@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Category } from "./category/category";
 import { Observable } from "rxjs";
+import { ResponsePageable } from "./category/response-pageable.model";
 
 @Injectable({
     providedIn: 'root'
@@ -22,8 +23,8 @@ export class CategoryService {
     }
 
 
-    findAll() : Observable <Category[]> {
-        return this.http.get<Category[]>('http://localhost:8080/categories');
+    findAll() : Observable <ResponsePageable> {
+        return this.http.get<ResponsePageable>('http://localhost:8080/categories');
     }
 
     findById(id: number) : Observable<Category> {
