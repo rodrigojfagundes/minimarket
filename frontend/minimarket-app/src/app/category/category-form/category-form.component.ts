@@ -12,7 +12,6 @@ export class CategoryFormComponent implements OnInit {
 
     constructor() {
         this.category = new Category();
-        this.category.name = 'Food';
     }
 
     
