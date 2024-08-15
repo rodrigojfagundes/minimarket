@@ -1,43 +1,41 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Product } from "./product/product";
-import { Observable } from "rxjs";
-import { ResponsePageableProduct } from "./product/response-pageable-product.model";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Product } from './product/product';
+import { Observable } from 'rxjs';
+import { ResponsePageableProduct } from './product/response-pageable-product.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class ProductService {
+  apiURL: string = environment.apiUrlBase + '/products';
 
+  httpOptions = {
+    Headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
 
-    httpOptions = {
-        Headers: new HttpHeaders({
-            'Content-Type' : 'application/json'
-        })
-    };
+  constructor(private http: HttpClient) {}
 
-    constructor(private http: HttpClient){}
+  insert(product: Product): Observable<Product> {
+    return this.http.post<Product>(`${this.apiURL}`, product);
+  }
 
-    insert(product: Product) : Observable<Product>{
-        return this.http.post<Product>(`http://localhost:8080/products`, product);
-    }
+  update(product: Product): Observable<any> {
+    return this.http.put<Product>(`${this.apiURL}/${product.id}`, product);
+  }
 
-    update(product: Product) : Observable<any>{
-        return this.http.put<Product>(`http://localhost:8080/products/${product.id}`, product);
-    }
+  findAll(): Observable<ResponsePageableProduct> {
+    return this.http.get<ResponsePageableProduct>(this.apiURL);
+  }
 
-    findAll() : Observable<ResponsePageableProduct> {
-        return this.http.get<ResponsePageableProduct>('http://localhost:8080/products');
-    }
+  findById(id: number): Observable<Product> {
+    return this.http.get<any>(`${this.apiURL}/${id}`);
+  }
 
-    findById(id: number) : Observable<Product> {
-        return this.http.get<any> (`http://localhost:8080/products/${id}`);
-    }
-
-    delete(product: Product) : Observable<any>{
-        return this.http.delete<any>(`http://localhost:8080/products/${'product.id'}`);
-    }
-
-
+  delete(product: Product): Observable<any> {
+    return this.http.delete<any>(`${this.apiURL}/${'product.id'}`);
+  }
 }
