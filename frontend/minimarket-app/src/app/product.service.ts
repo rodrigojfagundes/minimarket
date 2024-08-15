@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Product } from "./product/product";
 import { Observable } from "rxjs";
 import { ResponsePageableProduct } from "./product/response-pageable-product.model";
@@ -9,6 +9,13 @@ import { ResponsePageableProduct } from "./product/response-pageable-product.mod
 })
 
 export class ProductService {
+
+
+    httpOptions = {
+        Headers: new HttpHeaders({
+            'Content-Type' : 'application/json'
+        })
+    };
 
     constructor(private http: HttpClient){}
 
