@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  clientId: 'minimarket',
+  clientSecret: 'minimarket123',
+  getTokenUrl: '/oauth/token',
 };
 
 /*
