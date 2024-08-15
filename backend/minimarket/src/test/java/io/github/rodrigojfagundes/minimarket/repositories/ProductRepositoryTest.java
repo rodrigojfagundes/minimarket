@@ -90,6 +90,7 @@ public class ProductRepositoryTest {
 		List<Product> productPage = repository.findAll();
 		
 		assertNotNull(productPage);
+
 		
 		
 	}

@@ -31,7 +31,6 @@ import io.github.rodrigojfagundes.minimarket.repositories.CategoryRepository;
 import io.github.rodrigojfagundes.minimarket.repositories.ProductRepository;
 
 
-
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
 	
