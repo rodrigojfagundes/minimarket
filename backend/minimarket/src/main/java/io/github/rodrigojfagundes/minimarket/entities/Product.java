@@ -34,12 +34,13 @@ public class Product implements Serializable {
 	}
 
 
-	public Product(Long id, String name, String description, Long quantity) {
+	public Product(Long id, String name, String description, Long quantity, Category category) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.quantity = quantity;
+		this.category = category;
 	}
 
 
