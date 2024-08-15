@@ -15,11 +15,13 @@ import { LoginComponent } from './login/login.component.ts';
 import { LayoutComponent } from './layout/layout.component.ts';
 import { AuthService } from './auth.service';
 import { TokenInterceptor } from './token.interceptor';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, LoginComponent, LayoutComponent],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     TemplateModule,
