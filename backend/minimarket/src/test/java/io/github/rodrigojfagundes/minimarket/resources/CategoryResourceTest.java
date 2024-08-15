@@ -28,7 +28,6 @@ import io.github.rodrigojfagundes.minimarket.dto.CategoryDTO;
 import io.github.rodrigojfagundes.minimarket.services.CategoryService;
 import io.github.rodrigojfagundes.minimarket.tests.Factory;
 
-
 @WebMvcTest(CategoryResource.class)
 public class CategoryResourceTest {	
 	
