@@ -59,21 +59,21 @@ public class UserService implements UserDetailsService{
 	}
 	
 	@Transactional
-	public UserDTO insert(UserInsertDTO dto) {
+	public UserDTO insert(UserInsertDTO userInsertDTO) {
 		User user = new User();
 		
-		copyDtoToEntity(dto, user);
-		user.setPassword(passwordEncoder.encode(dto.getPassword()));
+		copyDtoToEntity(userInsertDTO, user);
+		user.setPassword(passwordEncoder.encode(userInsertDTO.getPassword()));
 		user = repository.save(user);
 		
 		return new UserDTO(user);
 	}
 	
 	@Transactional
-	public UserDTO update(Long id, UserUpdateDTO userDTO) {
+	public UserDTO update(Long id, UserUpdateDTO userUpdateDTO) {
 		try {
 			User user = repository.getOne(id);
-			copyDtoToEntity(userDTO, user);
+			copyDtoToEntity(userUpdateDTO, user);
 			user = repository.save(user);
 			
 			return new UserDTO(user);

@@ -31,34 +31,34 @@ public class UserResource {
 	
 	@GetMapping
 	private ResponseEntity<List<UserDTO>> findAll() {
-		List<UserDTO> users = service.findAll();
-		return ResponseEntity.ok().body(users);
+		List<UserDTO> usersDTOs = service.findAll();
+		return ResponseEntity.ok().body(usersDTOs);
 	}
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> findById(@PathVariable Long id){
-		UserDTO user = service.findById(id);
-		return ResponseEntity.ok(user);
+		UserDTO userDTO = service.findById(id);
+		return ResponseEntity.ok(userDTO);
 	}
 	
 	
 	@PostMapping 
-	public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO userDTO){
-		UserDTO newDTO = service.insert(userDTO);
+	public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO userInsertDTO){
+		UserDTO userDTO = service.insert(userInsertDTO);
 		
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest().path("/{id}").buildAndExpand(
-						newDTO.getId()).toUri();
-		return ResponseEntity.created(uri).body(newDTO);
+						userDTO.getId()).toUri();
+		return ResponseEntity.created(uri).body(userDTO);
 	}
 	
 	
 	@PutMapping
 	public ResponseEntity<UserDTO> update(@PathVariable Long id, 
-			@Valid @RequestBody UserUpdateDTO userDTO) {
+			@Valid @RequestBody UserUpdateDTO userUpdateDTO) {
 		
-		UserDTO newDTO = service.update(id, userDTO);
-		return ResponseEntity.ok().body(newDTO);
+		UserDTO userDTO = service.update(id, userUpdateDTO);
+		return ResponseEntity.ok().body(userDTO);
 	}
 	
 	@DeleteMapping(value = "/{id}")
