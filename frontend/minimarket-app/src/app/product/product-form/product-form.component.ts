@@ -28,7 +28,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   returnToList() {
-    this.router.navigate(['/product-list']);
+    this.router.navigate(['/product/list']);
   }
 
   ngOnInit(): void {
