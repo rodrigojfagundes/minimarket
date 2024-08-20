@@ -1,6 +1,12 @@
 # minimarkets
 
 
+#### link para acesso: https://minimarket-app-frontend-deploy.onrender.com
+#### usuário: rodrigo
+#### senha: 123456
+
+#### Swagger OpenAPI: https://minimarket-backend-production.up.railway.app/swagger-ui/index.html
+
 
 ## Backend
 - Java 11
