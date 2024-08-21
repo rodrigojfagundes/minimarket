@@ -93,3 +93,7 @@
 ## 22 - Testes Unitários - 2
 <img src="https://github.com/rodrigojfagundes/minimarket/blob/main/imagens/22%20-%20Testes%20Unit%C3%A1rios%20-%202.png" />
 
+## 22 - Modelo Conceitual
+<img src="https://github.com/rodrigojfagundes/minimarket/blob/main/imagens/23%20-%20Modelo%20Conceitual.jpg" />
+
+
