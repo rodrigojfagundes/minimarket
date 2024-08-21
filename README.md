@@ -1,5 +1,7 @@
 # minimarkets
 
+### Basicamente é um sistema para criar um usuário com autenticação e esse usuário pode cadastrar uma ou muitas  categorias e essas categorias podem ter um ou muitos produtos associado a ela.(ManyToOne, OneToMany).
+### Fazendo uso principalmente das tecnologias de Java + Spring e TypeScript + Angular + Bootstrap. E Testes Unitários.
 
 #### link para acesso: https://minimarket-app-frontend-deploy.onrender.com
 #### usuário: rodrigo
@@ -93,7 +95,7 @@
 ## 22 - Testes Unitários - 2
 <img src="https://github.com/rodrigojfagundes/minimarket/blob/main/imagens/22%20-%20Testes%20Unit%C3%A1rios%20-%202.png" />
 
-## 22 - Modelo Conceitual
+## 23 - Modelo Conceitual
 <img src="https://github.com/rodrigojfagundes/minimarket/blob/main/imagens/23%20-%20Modelo%20Conceitual.jpg" />
 
 
